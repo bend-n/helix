@@ -92,6 +92,7 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 
 dashmap = "6.0"
+tree-house = { workspace = true, features = ["fixtures"] }
 
 [target.'cfg(windows)'.dependencies]
 crossterm = { version = "0.28", features = ["event-stream"] }

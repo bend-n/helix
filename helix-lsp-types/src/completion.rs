@@ -24,7 +24,7 @@ impl InsertTextFormat {
 /// The kind of a completion entry.
 #[derive(Eq, PartialEq, Clone, Copy, Serialize, Deserialize)]
 #[serde(transparent)]
-pub struct CompletionItemKind(i32);
+pub struct CompletionItemKind(pub i32);
 lsp_enum! {
 impl CompletionItemKind {
     pub const TEXT: CompletionItemKind = CompletionItemKind(1);

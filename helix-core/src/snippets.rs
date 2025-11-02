@@ -1,6 +1,6 @@
 mod active;
 mod elaborate;
-mod parser;
+pub mod parser;
 mod render;
 
 #[derive(PartialEq, Eq, Hash, Debug, PartialOrd, Ord, Clone, Copy)]

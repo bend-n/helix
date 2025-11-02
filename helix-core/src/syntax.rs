@@ -90,7 +90,7 @@ impl LanguageData {
         Ok(Some(config))
     }
 
-    fn syntax_config(&self, loader: &Loader) -> Option<&SyntaxConfig> {
+    pub fn syntax_config(&self, loader: &Loader) -> Option<&SyntaxConfig> {
         self.syntax
             .get_or_init(|| {
                 Self::compile_syntax_config(&self.config, loader)
@@ -238,7 +238,7 @@ impl LanguageData {
     }
 }
 
-fn reconfigure_highlights(config: &SyntaxConfig, recognized_names: &[String]) {
+pub fn reconfigure_highlights(config: &SyntaxConfig, recognized_names: &[String]) {
     config.configure(move |capture_name| {
         let capture_parts: Vec<_> = capture_name.split('.').collect();
 
@@ -512,7 +512,7 @@ impl FileTypeGlobMatcher {
 
 #[derive(Debug)]
 pub struct Syntax {
-    inner: tree_house::Syntax,
+    pub inner: tree_house::Syntax,
 }
 
 const PARSE_TIMEOUT: Duration = Duration::from_millis(500); // half a second is pretty generous
@@ -1203,7 +1203,24 @@ mod test {
         );
 
         let language = LOADER.language_for_name("rust").unwrap();
+        dbg!(language);
         let grammar = LOADER.get_config(language).unwrap().grammar;
+        dbg!(grammar);
+        let syntax = Syntax::new(source.slice(..), language, &LOADER).unwrap();
+        let mut h = syntax.highlighter(
+            "fn main() { 4 + 2; }".into(),
+            &LOADER,
+            0.."fn main() { 4 + 2; }".len() as u32,
+        );
+
+        for n in 0..5 {
+            dbg!(h.active_highlights().collect::<Vec<_>>());
+            dbg!(h.next_event_offset());
+            let (e, h) = h.advance();
+            dbg!(h.collect::<Vec<_>>(), e);
+            // panic!()
+        }
+
         let query = Query::new(grammar, query_str, |_, _| Ok(())).unwrap();
         let textobject = TextObjectQuery::new(query);
         let syntax = Syntax::new(source.slice(..), language, &LOADER).unwrap();
@@ -1366,6 +1383,26 @@ mod test {
             ),
             0,
             source.len(),
+        );
+    }
+    #[test]
+    fn highlight() {
+        let source = Rope::from_str(r#"assert_eq!(0, Some(0));"#);
+        let loader = crate::config::default_lang_loader();
+        loader.set_scopes(vec!["punctuation".to_string()]);
+        let language = loader.language_for_name("rust").unwrap();
+
+        let syntax = Syntax::new(source.slice(..), language, &loader).unwrap();
+        println!(
+            "{}",
+            tree_house::fixtures::highlighter_fixture(
+                "",
+                &loader,
+                |_| "punct".to_string(),
+                &syntax.inner,
+                source.slice(..),
+                ..,
+            )
         );
     }
 }

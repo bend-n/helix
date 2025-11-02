@@ -210,6 +210,16 @@ pub enum NumberOrString {
     Number(i32),
     String(String),
 }
+impl From<i32> for NumberOrString {
+    fn from(v: i32) -> Self {
+        Self::Number(v)
+    }
+}
+impl From<&i32> for NumberOrString {
+    fn from(&v: &i32) -> Self {
+        Self::Number(v)
+    }
+}
 
 /* ----------------- Cancel support ----------------- */
 
