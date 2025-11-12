@@ -2564,7 +2564,7 @@ impl PublishDiagnosticsParams {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Deserialize, Serialize, Clone)]
+#[derive(Debug, Eq, PartialEq, Deserialize, Serialize, Clone, Hash)]
 #[serde(untagged)]
 pub enum Documentation {
     String(String),
@@ -2581,14 +2581,14 @@ pub enum Documentation {
 /// <pre><code>```${language}
 /// ${value}
 /// ```</code></pre>
-#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize)]
+#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize, Hash)]
 #[serde(untagged)]
 pub enum MarkedString {
     String(String),
     LanguageString(LanguageString),
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize)]
+#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize, Hash)]
 pub struct LanguageString {
     pub language: String,
     pub value: String,
@@ -2707,7 +2707,7 @@ pub struct ApplyWorkspaceEditResponse {
 ///
 /// Please note that `MarkupKinds` must not start with a `$`. This kinds
 /// are reserved for internal usage.
-#[derive(Debug, Eq, PartialEq, Deserialize, Serialize, Clone)]
+#[derive(Debug, Eq, PartialEq, Deserialize, Serialize, Clone, Hash)]
 #[serde(rename_all = "lowercase")]
 pub enum MarkupKind {
     /// Plain text is supported as a content format
@@ -2739,7 +2739,7 @@ pub enum MarkupKind {
 ///
 /// Please *Note* that clients might sanitize the return markdown. A client could decide to
 /// remove HTML from the markdown to avoid script execution.
-#[derive(Debug, Eq, PartialEq, Deserialize, Serialize, Clone)]
+#[derive(Debug, Eq, PartialEq, Deserialize, Serialize, Clone, Hash)]
 pub struct MarkupContent {
     pub kind: MarkupKind,
     pub value: String,

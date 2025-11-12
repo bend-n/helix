@@ -37,7 +37,7 @@ pub struct PreviousResultId {
 /// Parameters of the workspace diagnostic request.
 ///
 /// @since 3.17.0
-#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize)]
+#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct WorkspaceDiagnosticParams {
     /// The additional identifier provided during registration.
