@@ -64,7 +64,6 @@ fn prioritize_runtime_dirs() -> Vec<PathBuf> {
     if let Some(dir) = std::option_env!("HELIX_DEFAULT_RUNTIME") {
         rt_dirs.push(dir.into());
     }
-
     // fallback to location of the executable being run
     // canonicalize the path in case the executable is symlinked
     let exe_rt_dir = std::env::current_exe()
@@ -73,6 +72,7 @@ fn prioritize_runtime_dirs() -> Vec<PathBuf> {
         .and_then(|path| path.parent().map(|path| path.to_path_buf().join(RT_DIR)))
         .unwrap();
     rt_dirs.push(exe_rt_dir);
+    rt_dirs.push(PathBuf::from("/usr/lib/helix/runtime/"));
     rt_dirs
 }
 
