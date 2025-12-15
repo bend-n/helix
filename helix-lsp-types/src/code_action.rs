@@ -293,6 +293,9 @@ pub struct CodeAction {
     /// @since 3.16.0
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<Value>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub group: Option<String>,
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Default, Deserialize, Serialize)]
