@@ -150,7 +150,15 @@ impl From<CodeAction> for CodeActionOrCommand {
 }
 
 #[derive(Debug, Eq, PartialEq, Hash, PartialOrd, Clone, Deserialize, Serialize)]
-pub struct CodeActionKind(Cow<'static, str>);
+pub struct CodeActionKind(pub Cow<'static, str>);
+
+impl std::ops::Deref for CodeActionKind {
+    type Target = str;
+
+    fn deref(&self) -> &Self::Target {
+        self.as_str()
+    }
+}
 
 impl CodeActionKind {
     /// Empty kind.
