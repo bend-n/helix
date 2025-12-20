@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use serde_json::Value;
 
-use std::{borrow::Cow, ops::DerefPure};
+use std::{borrow::Cow, marker::StructuralPartialEq, ops::DerefPure};
 #[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum CodeActionProviderCapability {
@@ -149,7 +149,7 @@ impl From<CodeAction> for CodeActionOrCommand {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Hash, PartialOrd, Clone, Deserialize, Serialize)]
+#[derive(Debug, Eq, PartialOrd, Hash, Clone, Deserialize, Serialize)]
 pub struct CodeActionKind(pub Cow<'static, str>);
 
 impl std::ops::Deref for CodeActionKind {
@@ -159,6 +159,12 @@ impl std::ops::Deref for CodeActionKind {
         self.as_str()
     }
 }
+impl PartialEq for CodeActionKind {
+    fn eq(&self, other: &Self) -> bool {
+        self.0 == other.0
+    }
+}
+impl StructuralPartialEq for CodeActionKind {}
 unsafe impl DerefPure for CodeActionKind {}
 
 impl CodeActionKind {

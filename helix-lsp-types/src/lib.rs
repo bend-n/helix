@@ -15,7 +15,7 @@ able to parse any URI, such as `urn:isbn:0451450523`.
 
 */
 #![allow(non_upper_case_globals)]
-#![feature(deref_pure_trait)]
+#![feature(deref_pure_trait, structural_match)]
 use bitflags::bitflags;
 
 use std::{collections::HashMap, fmt::Debug};
