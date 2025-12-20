@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use serde_json::Value;
 
-use std::borrow::Cow;
+use std::{borrow::Cow, ops::DerefPure};
 #[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum CodeActionProviderCapability {
@@ -159,6 +159,7 @@ impl std::ops::Deref for CodeActionKind {
         self.as_str()
     }
 }
+unsafe impl DerefPure for CodeActionKind {}
 
 impl CodeActionKind {
     /// Empty kind.
