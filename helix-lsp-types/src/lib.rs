@@ -71,6 +71,9 @@ macro_rules! lsp_enum {
             $(#[$attr])*
             pub const $name: $enum_type = $value;
             )*
+            pub const ALL: &[$typ] = &[
+                $($value,)+
+            ];
         }
 
         impl std::fmt::Debug for $typ {
@@ -1262,7 +1265,7 @@ pub enum FailureHandlingKind {
 /// A symbol kind.
 #[derive(Eq, PartialEq, Copy, Clone, Serialize, Deserialize)]
 #[serde(transparent)]
-pub struct SymbolKind(i32);
+pub struct SymbolKind(pub i32);
 lsp_enum! {
 impl SymbolKind {
     pub const FILE: SymbolKind = SymbolKind(1);
