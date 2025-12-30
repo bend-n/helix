@@ -1294,6 +1294,19 @@ impl SymbolKind {
     pub const EVENT: SymbolKind = SymbolKind(24);
     pub const OPERATOR: SymbolKind = SymbolKind(25);
     pub const TYPE_PARAMETER: SymbolKind = SymbolKind(26);
+
+    pub const MACRO: SymbolKind = SymbolKind(50);
+    pub const PROC_MACRO: SymbolKind = SymbolKind(51);
+    pub const BUILTIN_ATTRIBUTE: SymbolKind = SymbolKind(52);
+    pub const ATTRIBUTE: SymbolKind = SymbolKind(53);
+    pub const DERIVE: SymbolKind = SymbolKind(54);
+    pub const DERIVE_HELPER: SymbolKind = SymbolKind(55);
+    pub const TYPE_ALIAS: SymbolKind = SymbolKind(56);
+    pub const LOCAL: SymbolKind = SymbolKind(57);
+    pub const LABEL: SymbolKind = SymbolKind(58);
+    pub const LIFETIME: SymbolKind = SymbolKind(59);
+    pub const VALUE: SymbolKind = SymbolKind(60);
+
 }
 }
 
