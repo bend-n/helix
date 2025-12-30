@@ -36,8 +36,8 @@ pub struct WorkspaceSymbolClientCapabilities {
     pub resolve_support: Option<WorkspaceSymbolResolveSupportCapability>,
 }
 
-/// The parameters of a Workspace Symbol Request.
 #[derive(Debug, Eq, PartialEq, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct WorkspaceSymbolParams {
     #[serde(flatten)]
     pub partial_result_params: PartialResultParams,
@@ -47,6 +47,24 @@ pub struct WorkspaceSymbolParams {
 
     /// A non-empty query string
     pub query: String,
+
+    pub search_scope: Option<WorkspaceSymbolSearchScope>,
+
+    pub search_kind: Option<WorkspaceSymbolSearchKind>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum WorkspaceSymbolSearchScope {
+    Workspace,
+    WorkspaceAndDependencies,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum WorkspaceSymbolSearchKind {
+    OnlyTypes,
+    AllSymbols,
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Default, Deserialize, Serialize)]
