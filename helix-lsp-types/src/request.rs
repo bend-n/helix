@@ -207,6 +207,9 @@ macro_rules! lsp_request {
     ("window/showDocument") => {
         $crate::request::ShowDocument
     };
+    ("experimental/onEnter") => {
+        $crate::request::OnEnter
+    };
 }
 
 /// The initialize request is sent as the first request from the client to the server.
@@ -966,6 +969,15 @@ impl Request for TypeHierarchySubtypes {
     type Params = TypeHierarchySubtypesParams;
     type Result = Option<Vec<TypeHierarchyItem>>;
     const METHOD: &'static str = "typeHierarchy/subtypes";
+}
+
+#[derive(Debug)]
+pub enum OnEnter {}
+
+impl Request for OnEnter {
+    type Params = TextDocumentPositionParams;
+    type Result = Option<Vec<SnippetTextEdit>>;
+    const METHOD: &'static str = "experimental/onEnter";
 }
 
 #[cfg(test)]
