@@ -210,6 +210,9 @@ macro_rules! lsp_request {
     ("experimental/onEnter") => {
         $crate::request::OnEnter
     };
+    ("experimental/matchingBrace") => {
+        $crate::request::MatchingBrace
+    };
 }
 
 /// The initialize request is sent as the first request from the client to the server.
@@ -978,6 +981,20 @@ impl Request for OnEnter {
     type Params = TextDocumentPositionParams;
     type Result = Option<Vec<SnippetTextEdit>>;
     const METHOD: &'static str = "experimental/onEnter";
+}
+#[derive(Debug, Eq, PartialEq, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MatchingBraceParams {
+    pub text_document: TextDocumentIdentifier,
+    /// Position for each cursor
+    pub positions: Vec<Position>,
+}
+#[derive(Debug)]
+pub enum MatchingBrace {}
+impl Request for MatchingBrace {
+    type Params = MatchingBraceParams;
+    const METHOD: &'static str = "experimental/matchingBrace";
+    type Result = Option<Vec<Position>>;
 }
 
 #[cfg(test)]
