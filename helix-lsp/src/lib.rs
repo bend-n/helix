@@ -1082,4 +1082,103 @@ mod tests {
         assert!(transaction.apply(&mut source));
         assert_eq!(source, "[\n  \"🇺🇸\",\n  \"🎄\",\n]");
     }
+    #[test]
+    fn rahh() {
+        use helix_lsp_types::*;
+        let th = [
+            TextEdit {
+                range: Range {
+                    start: Position {
+                        line: 1,
+                        character: 0,
+                    },
+                    end: Position {
+                        line: 1,
+                        character: 4,
+                    },
+                },
+                new_text: "".into(),
+            },
+            TextEdit {
+                range: Range {
+                    start: Position {
+                        line: 2,
+                        character: 0,
+                    },
+                    end: Position {
+                        line: 3,
+                        character: 1,
+                    },
+                },
+                new_text: "".into(),
+            },
+            TextEdit {
+                range: Range {
+                    start: Position {
+                        line: 3,
+                        character: 9,
+                    },
+                    end: Position {
+                        line: 3,
+                        character: 9,
+                    },
+                },
+                new_text: "let new =\n".into(),
+            },
+            TextEdit {
+                range: Range {
+                    start: Position {
+                        line: 3,
+                        character: 20,
+                    },
+                    end: Position {
+                        line: 3,
+                        character: 29,
+                    },
+                },
+                new_text: "".into(),
+            },
+            TextEdit {
+                range: Range {
+                    start: Position {
+                        line: 3,
+                        character: 56,
+                    },
+                    end: Position {
+                        line: 4,
+                        character: 24,
+                    },
+                },
+                new_text: "".into(),
+            },
+            TextEdit {
+                range: Range {
+                    start: Position {
+                        line: 6,
+                        character: 1,
+                    },
+                    end: Position {
+                        line: 6,
+                        character: 1,
+                    },
+                },
+                new_text: "\n".into(),
+            },
+        ];
+        let mut source = Rope::from_str(
+            "impl Editor { // 0
+        pub fn open(f: &Path) { // 1
+// 2
+                    let new = std::fs::read_to_string(f) // 3
+                        .map_err(anyhow::Error::from)?; // 4
+    }
+}",
+        );
+        println!("{}", source);
+
+        let transaction =
+            generate_transaction_from_edits(&source, th.to_vec(), OffsetEncoding::Utf8);
+        assert!(transaction.apply(&mut source));
+        println!("{}", source);
+    }
 }

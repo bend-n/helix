@@ -153,7 +153,7 @@ pub struct SemanticToken {
 }
 
 impl SemanticToken {
-    fn deserialize_tokens<'de, D>(deserializer: D) -> Result<Vec<SemanticToken>, D::Error>
+    pub fn deserialize_tokens<'de, D>(deserializer: D) -> Result<Vec<SemanticToken>, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -177,7 +177,7 @@ impl SemanticToken {
         )
     }
 
-    fn serialize_tokens<S>(tokens: &[SemanticToken], serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize_tokens<S>(tokens: &[SemanticToken], serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -192,7 +192,7 @@ impl SemanticToken {
         seq.end()
     }
 
-    fn deserialize_tokens_opt<'de, D>(
+    pub fn deserialize_tokens_opt<'de, D>(
         deserializer: D,
     ) -> Result<Option<Vec<SemanticToken>>, D::Error>
     where
@@ -208,7 +208,7 @@ impl SemanticToken {
         Ok(Option::<Wrapper>::deserialize(deserializer)?.map(|wrapper| wrapper.tokens))
     }
 
-    fn serialize_tokens_opt<S>(
+    pub fn serialize_tokens_opt<S>(
         data: &Option<Vec<SemanticToken>>,
         serializer: S,
     ) -> Result<S::Ok, S::Error>

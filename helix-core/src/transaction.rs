@@ -361,6 +361,7 @@ impl ChangeSet {
                     pos += s.chars().count();
                 }
             }
+            println!("=>\n{text}");
         }
         true
     }

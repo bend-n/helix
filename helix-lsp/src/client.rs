@@ -1503,6 +1503,7 @@ impl Client {
             query,
             work_done_progress_params: lsp::WorkDoneProgressParams::default(),
             partial_result_params: lsp::PartialResultParams::default(),
+            ..Default::default()
         };
 
         Some(self.call::<lsp::request::WorkspaceSymbolRequest>(params))
